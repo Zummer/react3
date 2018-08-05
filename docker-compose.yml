@@ -7,6 +7,7 @@ services:
     volumes:
       - ./docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
   webapp:
+    user: ${UID_VAR}:${GID_VAR}
     image: node
     working_dir: /app
     command: npm start
@@ -15,6 +16,7 @@ services:
     depends_on:
       - server
   server:
+    user: ${UID_VAR}:${GID_VAR}
     build: server
     command: npm start
     volumes:
