@@ -9,7 +9,7 @@
     "allowJs": true,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDir": "src",
+    "rootDirs": ["src", "server"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -19,6 +19,8 @@
     "noUnusedLocals": true
   },
   "exclude": [
+    "server",
+    "server-build",
     "node_modules",
     "build",
     "scripts",

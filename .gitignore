@@ -8,3 +8,6 @@ node_modules/
 *~
 *.swp
 *.swo
+
+server-build
+package-lock.json
