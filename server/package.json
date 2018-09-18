@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --experimental-modules src/index.mjs",
-    "install-start": "npm install && npm start"
+    "install-start": "npm install && npm start",
+    "start": "nodemon src/index.ts",
+    "inspect-start": "nodemon --config nodemon-inspect.json src/index.ts"
   },
   "author": "afanasev",
   "license": "ISC",
@@ -14,10 +15,30 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "jsonschema": "^1.2.4",
     "knex": "^0.15.2",
-    "mysql": "^2.16.0"
+    "lodash": "^4.17.10",
+    "md5": "^2.2.1",
+    "mysql": "^2.16.0",
+    "objection": "^1.2.6",
+    "shortid": "^2.2.13",
+    "uuid": "^3.3.2"
   },
   "devDependencies": {
-    "nodemon": "^1.18.3"
+    "@types/body-parser": "^1.17.0",
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
+    "@types/knex": "^0.14.23",
+    "@types/lodash": "^4.14.116",
+    "@types/md5": "^2.1.32",
+    "@types/node": "^10.9.4",
+    "@types/shortid": "0.0.29",
+    "@types/uuid": "^3.4.4",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-stage-2": "^6.24.1",
+    "nodemon": "^1.18.3",
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
   }
 }

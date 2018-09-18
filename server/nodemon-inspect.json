@@ -1,0 +1,3 @@
+{
+  "exec": "node --inspect=server:9229 ./node_modules/.bin/ts-node"
+}
