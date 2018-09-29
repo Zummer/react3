@@ -1,9 +1,11 @@
-import {IPaginationQuery} from '../data/BaseDataProvider';
-import {UserActiveDataProvider} from '../data/UserActiveDataProvider';
+import {QueryBuilder} from 'objection';
+import {ActiveDataProvider} from '../data/ActiveDataProvider';
+import {IQueryParams} from '../data/BaseDataProvider';
 import {IFormModel} from '../models/FormModel';
 import {FormModel} from '../models/FormModel';
+import User from '../models/User';
 
-interface IAttributes extends IPaginationQuery {
+export interface IAttributes {
     id?: string;
     date_from?: Date;
     date_to?: Date;
@@ -13,7 +15,7 @@ interface IAttributes extends IPaginationQuery {
 }
 
 interface IUserSearchFrom extends IAttributes, IFormModel<IAttributes> {
-    search: (query: IAttributes) => UserActiveDataProvider;
+    search: (query: IQueryParams) => ActiveDataProvider<User>;
 }
 
 class UserSearchFrom extends FormModel<IAttributes> implements IUserSearchFrom {
@@ -50,15 +52,33 @@ class UserSearchFrom extends FormModel<IAttributes> implements IUserSearchFrom {
         },
     };
 
-    public search = (query: IAttributes): UserActiveDataProvider => {
-        const dataProvider = new UserActiveDataProvider(query);
+    public search = (queryParams: IAttributes & IQueryParams): ActiveDataProvider<User> => {
+        const {id, username, email, status} = queryParams;
 
-        this.load(query);
+        const filter: IAttributes = {
+            id,
+            username: username ? `%${username}%` : undefined,
+            email: email ? `%${email}%` : undefined,
+            status,
+        };
 
-        if (!this.validate()) {
+        const filterResults = (queryBuilder: QueryBuilder<User>) => {
+            queryBuilder
+                .andWhere('id', filter.id)
+                .andWhere('status', filter.status)
+                .andWhere('username', 'like', filter.username)
+                .andWhere('email', 'like', filter.email);
+        };
+
+        const query: QueryBuilder<User> = User.query<User>().skipUndefined().modify(filterResults);
+        const dataProvider = new ActiveDataProvider<User>(queryParams, query);
+
+        this.load(queryParams);
+
+        // if (!this.validate()) {
             // query.where('0=1');
-            return dataProvider;
-        }
+            // return dataProvider;
+        // }
 
         return dataProvider;
     }

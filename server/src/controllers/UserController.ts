@@ -1,6 +1,6 @@
 import {NextFunction, Request, Response} from 'express';
+import {ActiveDataProvider} from '../data/ActiveDataProvider';
 import {IDataFromProvider} from '../data/DataProviderInterface';
-import {UserActiveDataProvider} from '../data/UserActiveDataProvider';
 import {UserCreateForm} from '../forms/UserCreateForm';
 import {UserEditForm} from '../forms/UserEditForm';
 import {UserSearchFrom} from '../forms/UserSearchFrom';
@@ -15,8 +15,8 @@ class UserController {
         const searchModel = new UserSearchFrom();
 
         try {
-            const dataProvider: UserActiveDataProvider = searchModel.search(req.query);
-            const data: IDataFromProvider = {
+            const dataProvider: ActiveDataProvider<User> = searchModel.search(req.query);
+            const data: IDataFromProvider<User> = {
                 items: await dataProvider.getModels(),
                 pagination: dataProvider.getPagination(),
                 total: dataProvider.total,

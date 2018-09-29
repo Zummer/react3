@@ -81,7 +81,7 @@ class User extends Model implements IUser {
 
     public $formatJson(json) {
         json = super.$formatJson(json);
-        return pick(json, ['email', 'username', 'created_at']);
+        return pick(json, ['id', 'email', 'username', 'created_at']);
     }
 
     private setPassword(password: string): void {
